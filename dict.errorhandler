@@ -1,0 +1,2 @@
+dbo:genre,dbo:Genre,rdf:type
+dbo:musicalArtist,dbo:MusicalWork,dbo:musicalArtist

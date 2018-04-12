@@ -1,0 +1,126 @@
+import json
+import error_handler
+import csv
+import kb_agent
+import pprint
+
+class DM:
+    def __init__(self):
+        pass
+
+    def pTopicIdentifier(self,kblang):
+        #longest entity
+        cTopics = kblang['cTopics']
+        if len(cTopics) > 0:
+            pTopic = max(kblang['cTopics'],key=len)
+            kblang['pTopic'] = pTopic
+        else:
+            pass
+        return kblang
+
+    def dm(self,kblang):
+        if kblang['dialogAct'][-1] == "start":
+            dialogAct = kblang['dialogAct']
+            dialogAct.append("Question")
+            kblang['dialogAct'] = dialogAct
+#            kblang['dialogAct'] = "Question"
+            kblang['dialogStatus'] = "start"
+            kblang['pTopic'] = ""
+            kblang['property'] = "dbo:genre"
+            kblang['concept'] = "dbo:MusicalArtist"
+            kblang['area'] = 'MusicalArtist'
+            kblang['N_of_Q'] = 0
+
+        else:
+            kblang['dialogStatus'] = 'hold'
+            # error handler
+            print('DM:')
+            pprint.pprint(kblang)
+            print('')
+            error_hander_input = {}
+            error_hander_input['cTopics'] = kblang['cTopics']
+            error_hander_input['intent'] = kblang['dialogAct'][-1]
+
+            error_handler_output = error_handler.error_handler(error_hander_input)
+#            print('eh',error_handler_output)
+            unCertain = False
+            for i in error_handler_output:
+                #error 가 있는 경우
+                if i['inContext'] == "Uncertain":
+                    kblang['pTopic'] = i['label']
+                    dialogAct = kblang['dialogAct']
+                    dialogAct.append('CheckQuestion')
+                    kblang['dialogAct'] = dialogAct
+#                    print(kblang)
+                    concept = False
+                    with open('./dict.errorhander','r') as f:
+                        reader = csv.reader(f)
+                        for line in reader:
+                            if line[0] == kblang['property']:
+                                concept = line[1]
+                                break
+                    if concept:
+                        kblang['concept'] = concept
+                    else:
+                        pass
+                    unCertain = True
+                    break
+                else:
+                    pass
+            if unCertain == False:
+                #error 가 없는 경우
+                #pTopic 부여
+                kblang = DM.pTopicIdentifier(self,kblang)
+
+                #Argree 인 경우
+                if kblang['dialogAct'][-1] == 'Agree':
+                    dialogAct = kblang['dialogAct']
+                    dialogAct.append('Question')
+                    kblang['dialogAct'] = dialogAct
+                    concept = False
+                    with open('./dict.dm','r') as f:
+                        reader = csv.reader(f)
+                        for line in reader:
+                            if line[0] == kblang['concept']:
+                                concept = line[1]
+                                break
+                    if concept:
+                        kblang['concept'] = concept
+                    else:
+                        incomplete_list = kb_agent.KB_incomplete(kblang)
+                        kblang['concept'] = incomplete_list[kblang['N_of_Q']]['concept']
+                        kblang['property'] = incomplete_list[kblang['N_of_Q']]['property']
+                        kblang['N_of_Q'] = kblang['N_of_Q'] +1
+
+                elif kblang['dialogAct'][-1] == 'Disagree':
+                    dialogAct = kblang['dialogAct']
+                    dialogAct.append('start')
+                    kblang['dialogAct'] = dialogAct
+                else:
+                    dialogAct = kblang['dialogAct']
+                    dialogAct.append('Question')
+                    kblang['dialogAct'] = dialogAct
+                    incomplete_list = kb_agent.KB_incomplete(kblang)
+                    pprint.pprint('else:')
+                    pprint.pprint(kblang)
+                    print("")
+                    print('incom',incomplete_list)
+                    concept = False
+                    with open('./dict.dm','r') as f:
+                        reader = csv.reader(f)
+                        for line in reader:
+                            if line[0] == kblang['concept']:
+                                concept = line[1]
+                                break
+                    if concept:# and kblang['concept'] != 'dbo:MusicalArtist':
+                        kblang['concept'] = concept
+#                        print('CONCEPT',concept)
+#                    elif kblang['concept'] == 'dbo:MusicalArtist':
+#                        pass
+                    else:
+                        kblang['concept'] = incomplete_list[kblang['N_of_Q']]['concept']
+                        kblang['property'] = incomplete_list[kblang['N_of_Q']]['property']
+                        kblang['N_of_Q'] = kblang['N_of_Q'] +1
+
+
+        return kblang

@@ -1,0 +1,92 @@
+[
+    {
+        "dialogAct": "Opening",
+        "utterance": "시작",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "Question",
+        "utterance": "우리 가수에 대해서 이야기 해 볼까요? 어느 장르의 가수를 좋아하시나요?",
+        "speaker": "system_kbagent"
+    },
+    {
+        "dialogAct": "Answer",
+        "utterance": "[힙합]",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "CheckQuestion",
+        "utterance": "힙합은 장르인가요?",
+        "speaker": "system_kbagent"
+    },
+    {
+        "dialogAct": "Neutral",
+        "utterance": "ㅇ",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "Question",
+        "utterance": "힙합은 가수인가요?",
+        "speaker": "system_kbagent"
+    },
+    {
+        "dialogAct": "Answer",
+        "utterance": "ㅇ",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "Question",
+        "utterance": "힙합은 노래인가요?",
+        "speaker": "system_kbagent"
+    },
+    {
+        "dialogAct": "Answer",
+        "utterance": "ㅇ",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "Question",
+        "utterance": "혹시 힙합의 활동시기를 아시나요?",
+        "speaker": "system_kbagent"
+    },
+    {
+        "dialogAct": "Answer",
+        "utterance": "ㅇ",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "Question",
+        "utterance": "혹시 힙합의 소속사를 아시나요?",
+        "speaker": "system_kbagent"
+    },
+    {
+        "dialogAct": "Answer",
+        "utterance": "ㅇ",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "Question",
+        "utterance": "혹시 힙합의 대표적활동을 아시나요?",
+        "speaker": "system_kbagent"
+    },
+    {
+        "dialogAct": "Answer",
+        "utterance": "ㅇ",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "Question",
+        "utterance": "힙합은 None인가요?",
+        "speaker": "system_kbagent"
+    },
+    {
+        "dialogAct": "Answer",
+        "utterance": "ㅇ",
+        "speaker": "user"
+    },
+    {
+        "dialogAct": "Thanking",
+        "utterance": "정말 감사합니다. 혹시 다른 관심있는 주제가 있으세요?",
+        "speaker": "system_kbagent"
+    }
+]

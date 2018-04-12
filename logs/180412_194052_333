@@ -1,0 +1,92 @@
+[
+    {
+        "dialogAct": "Opening",
+        "speaker": "user",
+        "utterance": "시작"
+    },
+    {
+        "dialogAct": "Question",
+        "speaker": "system_kbagent",
+        "utterance": "우리 가수에 대해서 이야기 해 볼까요? 어느 장르의 가수를 좋아하시나요?"
+    },
+    {
+        "dialogAct": "Answer",
+        "speaker": "user",
+        "utterance": "[힙합]"
+    },
+    {
+        "dialogAct": "CheckQuestion",
+        "speaker": "system_kbagent",
+        "utterance": "힙합은 장르인가요?"
+    },
+    {
+        "dialogAct": "Agree",
+        "speaker": "user",
+        "utterance": "응 맞아"
+    },
+    {
+        "dialogAct": "Question",
+        "speaker": "system_kbagent",
+        "utterance": "힙합과 관련된 어느 가수를 좋아하시나요?"
+    },
+    {
+        "dialogAct": "Answer",
+        "speaker": "user",
+        "utterance": "[현진영]"
+    },
+    {
+        "dialogAct": "Question",
+        "speaker": "system_kbagent",
+        "utterance": "현진영과 관련된 어느 노래를 좋아하시나요?"
+    },
+    {
+        "dialogAct": "Answer",
+        "speaker": "user",
+        "utterance": "[야호]"
+    },
+    {
+        "dialogAct": "Question",
+        "speaker": "system_kbagent",
+        "utterance": "혹시 현진영의 활동시기를 아시나요?"
+    },
+    {
+        "dialogAct": "Answer",
+        "speaker": "user",
+        "utterance": "[199년]"
+    },
+    {
+        "dialogAct": "Question",
+        "speaker": "system_kbagent",
+        "utterance": "혹시 현진영의 소속사를 아시나요?"
+    },
+    {
+        "dialogAct": "Answer",
+        "speaker": "user",
+        "utterance": "모르겠어"
+    },
+    {
+        "dialogAct": "Question",
+        "speaker": "system_kbagent",
+        "utterance": "혹시 현진영의 대표적활동을 아시나요?"
+    },
+    {
+        "dialogAct": "Answer",
+        "speaker": "user",
+        "utterance": "글세?"
+    },
+    {
+        "dialogAct": "Question",
+        "speaker": "system_kbagent",
+        "utterance": "현진영을 어떻게 생각하세요?"
+    },
+    {
+        "dialogAct": "Answer",
+        "speaker": "user",
+        "utterance": "아주 좋아해 ^^"
+    },
+    {
+        "utterance": "정말 감사합니다. 혹시 다른 관심있는 주제가 있으세요?",
+        "dialogAct": "Thanking",
+        "speaker": "system_kbagent"
+    }
+]
