@@ -35,7 +35,7 @@
 			<random>
 				<li>[pTopic][과] 관련된 어느 [concept][을] 좋아하시나요?</li>
 				<li>[pTopic]의 [concept] 중 좋아하시는게 있나요?</li>
-				<li>[pTopic]에서 제일 좋아하는 [concept][이] 무엇인가요?</li>
+				<li>[pTopic]의 제일 좋아하는 [concept][이] 무엇인가요?</li>
 			</random>
 		</template>
 	</category>
@@ -82,7 +82,6 @@
 		<template>
 			<random>
 				<li>[pTopic]의 [property][는] [object][어미_이]에요!</li>
-				<li>[pTopic]</li>
 			</random>
 		</template>
 	</category>

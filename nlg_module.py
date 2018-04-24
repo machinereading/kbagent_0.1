@@ -55,7 +55,7 @@ class NLG:
 	# if value is list, 
 	# properties must be in alphabet-order
 	def preprocess(self, inputJson):
-		print(inputJson)
+		# print(inputJson)
 		ignoreKey = ["dialog"]
 		items = []
 		result = []
