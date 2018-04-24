@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0.1" encoding="UTF-8">
+<!--
+	pattern writing rule
+	python-aiml의 한계로 json을 pattern으로 바로 던질 수 없기 때문에 다음과 같은 rule을 적용함.
+	1. 무조건 대문자로 쓸 것 - 소문자를 인식하지 못함
+
+	2. *을 제외한 특수문자를 쓰지 말 것 - 특수문자를 인식하지 못함 
+
+	3. json의 key와 원하는 value를 연속해서 쓰고, 좌우로 *을 쓸 것
+	ex) dialogstatus가 start임을 원할 때 * DIALOGSTATUS START *
+
+	4. 여러 key에 대한 조건이 필요할 경우 key의 알파벳 순서로 작성하고, 각각의 조건 사이에 *을 쓸 것
+	ex) 3의 조건에 area:Music이 추가적으로 필요한 경우 * AREA MUSIC * DIALOGSTATUS START *
+
+	5. json의 value가 list인 경우 LISTSTART ... LISTEND 형식으로 작성됨.
+	따라서 list 안에 어떤 value를 원하면 "KEY * VALUE *"을, 시작 value 필터를 걸고 싶으면 "KEY LISTSTART VALUE *"등의 방식으로 작성
+
+	6. key, value 안에 있는 특수문자는 모두 무시됨. 또한, value는 colon-separated로 들어감
+	ex) property가 prop-ko:xx 을 원한다면 PROPERTY PROPKO XX * 로 작성
+	
+	template writing rule
+	1. 특정 json key의 값을 원할 때는 [key]와 같이 slot으로 작성 -> nlg module의 postprocess에서 처리할 것임.
+	2. 종성에 관계있는 조사(은,는,이,가 등등)은 "받침이 있는 형태의" 조사를 slot으로 작성
+	ex) [pTopic][은]... 
+-->
+
+	<category>
+		<pattern>* DIALOGSTATUS START *</pattern>
+		<template>우리 [area]에 대해서 이야기 해 볼까요? 어느 [property]의 [concept][을] 좋아하시나요?</template>
+	</category>
+	<category>
+		<pattern>* QUESTIONTYPE FACTUAL *</pattern>
+		<template>
+			<random>
+				<li>[pTopic][과] 관련된 어느 [concept][을] 좋아하시나요?</li>
+				<li>[pTopic]의 [concept] 중 좋아하시는게 있나요?</li>
+				<li>[pTopic]에서 제일 좋아하는 [concept][이] 무엇인가요?</li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<pattern>* DIALOGACT * CHECKQUESTION LISTEND *</pattern>
+		<template>
+			<random>
+				<li>[pTopic][은] [concept]인가요?</li>
+				<li>[pTopic][이] [concept][이] 맞나요?</li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<!--checkquestion에서 부정 답변을 했을 때 이 대화로 들어오는데, 이 대화 이후 nlu 모듈에서 에러가 남-->
+		<pattern>* DIALOGACT * START LISTEND *</pattern>
+		<template>
+			<random>
+				<li>그럼 어떤 [concept][을] 좋아하시나요?</li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<pattern>* PROPERTY KBOX EVALUATION *</pattern>
+		<template>
+			<random>
+				<li>[pTopic][을] 어떻게 생각하세요?</li>
+				<li>[pTopic]에 대한 생각을 듣고 싶어요!</li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<pattern>* PROPERTY PROPKO *</pattern>
+		<template>
+			<random>
+				<li>혹시 [pTopic]의 [property][을] 아시나요?</li>
+				<li>[pTopic]의 [property][을] 알려 주실 수 있으신가요?</li>
+				<li>[pTopic]의 [property]에 대해서 알고 싶어요!</li>
+				<li>[pTopic]의 [property][을] 알려 주셨으면 좋겠어요!</li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<pattern>* DIALOGACT * INFORM LISTEND *</pattern>
+		<template>
+			<random>
+				<li>[pTopic]의 [property][는] [object][어미_이]에요!</li>
+				<li>[pTopic]</li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<pattern></pattern>
+		<template>
+			<random>
+				<li></li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<pattern></pattern>
+		<template>
+			<random>
+				<li></li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<pattern></pattern>
+		<template>
+			<random>
+				<li></li>
+			</random>
+		</template>
+	</category>
+
+</aiml>

@@ -1,0 +1,6 @@
+{ "dialogStatus": "start", "dialogAct": ["AAA", "Question"], "pTopic": "", "property": "dbo:genre", "concept": "dbo:MusicalArtist", "questionType": "opinion", "area": "MusicalArtist" }
+{ "dialogStatus": "hold", "dialogAct": ["AAA", "Question"], "pTopic": "현진영", "property": "dbo:musicalArtist", "concept": "dbo:MusicalWork", "questionType": "factual", "area": "MusicalArtist" }
+{ "dialogStatus": "hold", "dialogAct": ["AAA", "BBB", "CheckQuestion"], "pTopic": "뉴잭스윙", "property": "rdf:type", "concept": "dbo:Genre", "questionType": "factual", "area": "MusicalArtist" }
+{ "dialogStatus": "hold", "dialogAct": ["AAA","BBB","Question"], "pTopic": "현진영", "property": "kbox:evaluation", "concept": "",  "questionType": "opinion", "area": "MusicalArtist"}
+{ "dialogStatus": "hold", "dialogAct": ["AAA","BBB","Question"], "pTopic": "현진영", "property": "prop-ko:활동시기", "concept": "dbo:Instrument",  "questionType": "factual", "area": "MusicalArtist"}
+{ "dialogStatus": "hold", "dialogAct": ["AAA", "BBB", "CheckQuestion", "Question"], "pTopic": "뉴잭스윙", "property": "rdf:type", "concept": "dbo:MusicalArtist", "questionType": "factual", "area": "MusicalArtist" }
