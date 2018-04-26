@@ -1,5 +1,6 @@
 dbo:MusicalWork	dbo:musicalArtist	True	True	factual
-dbo:Thing	prop-ko:활동시기	False	True	factual
+dbo:Thing	prop-ko:활동시기	False	False	factual
 dbo:Thing	prop-ko:소속사	False	True	factual
 dbo:Thing	prop-ko:대표적활동	False	True	factual
+dbo:Thing	prop-ko:출생지	False	False	factual
 dbo:Thing	kbox:evaluation	False	True	opinion

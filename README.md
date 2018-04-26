@@ -2,7 +2,7 @@
 
 ## About
 
-KB-agnet: Interactive Learning through dialog between bot and user
+KB-agent: Interactive Learning through dialog between bot and user
 
 ## prerequisite
 * `python 3`
