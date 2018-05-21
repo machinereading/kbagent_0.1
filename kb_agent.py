@@ -12,6 +12,8 @@ headers = {
     'text/tsv, text/tab-separated-values '
 }
 
+SPARQL_LIMIT = 10000
+
 def KB_incomplete(inputjson):
 	indic = inputjson
 	dialogStatus = indic["dialogStatus"]
@@ -73,24 +75,56 @@ def check_question_in_KB(uri, inputdic):
 		else:
 			return True
 
-def top_10_question_generator(EntityType):
-	f = codecs.open("data/types_analysis/"+EntityType+".txt", "r", encoding="utf-8")
-	qlist = []
-	f.readline()
-	for line in f.readlines():
-		line = line.strip().split("\t")
-		if "ko.dbpedia.org/property" in line[0]:
-			qlist.append(line[0])
-		if len(qlist) == 10:
-			break
+def generate_top_10_question(EntityType):
+	try:
+		f = codecs.open("data/types_analysis/"+EntityType+".txt", "r", encoding="utf-8")
+		qlist = []
+		f.readline()
+		for line in f.readlines():
+			line = line.strip().split("\t")
+			if "ko.dbpedia.org/property" in line[0]:
+				qlist.append(line[0])
+			if len(qlist) == 10:
+				break
 
-	return qlist
+		return qlist
+	except:
+		print("No such entity type was predefined.")
 
+		return []
+
+
+# Input: python dic {"pTopic": uri}
+# Output: python dic {"abstract": abstract text}
+def generate_entity_abstract(inputdic):
+	try:
+		uri = inputdic["pTopic"]
+		query = "PREFIX dbo: <http://dbpedia.org/ontology/> SELECT ?o " \
+				"WHERE { <"+uri+"> dbo:abstract ?o .}"
+		values = urlencode({'query': query})
+		http = urllib3.PoolManager()
+
+		url = server + 'query?' + values
+		r = http.request('GET', url, headers=headers)
+		label = ''
+		request = json.loads(r.data.decode('UTF-8'))
+
+		result_list = request['results']['bindings']
+		#print(query)
+		#print(result_list)
+		
+		return {"abstract":result_list[0]["o"]["value"]}
+	except:
+		print("No such uri in KB")
+		return {"abstract":None}
 
 if __name__ == "__main__":
 	sample0 = {"dialogStatus":"hold", "pTopic":"http://ko.dbpedia.org/resource/현진영", "area":"MusicalArtist"}
 	print(KB_incomplete(sample0))
-	print(top_10_question_generator("SoccerPlayer"))
+	print(generate_top_10_question("SoccerPlayer"))
+	print(generate_top_10_question("None"))
+	print(generate_entity_abstract({"uri":"http://ko.dbpedia.org/resource/마이노스"}))
+
 
 
 
