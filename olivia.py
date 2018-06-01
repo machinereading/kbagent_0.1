@@ -8,9 +8,10 @@ import pprint
 import simsimi
 import random
 from time import strftime
+from ka import ka_by_question
+from feedback_module import Feedback
 
 #dialogAct = ['START']
-    
 
 dm = dm_module.DM()
 nlu = nlu_module.NLU()
@@ -25,7 +26,7 @@ def ioAdapter(utterance):
 
 def chat_classifier(kblang):
     utterance = kblang['dialog'][-1]['utterance']
-    with open('./chat.class','r') as f:
+    with open('./chat.class','r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             lines = line.split('\t')
@@ -112,6 +113,10 @@ def olivia(kblang):
             kblang['dialogAct'] = dialogAct
 
             kblang = dm.dm(kblang)
+            #kblang = ka_by_question(kblang)
+
+            if kblang['dialogStatus'] == 'feedback':
+                kblang = Feedback.checker(kblang)
 
             if kblang['dialogStatus'] == 'end':
                 response = {}
@@ -133,6 +138,9 @@ def olivia(kblang):
 
                 kblang['area'] = 'chitchat'
 
+            elif kblang['dialogStatus'] == 'feedback':
+                pass
+
             else:
                 response = nlg.nlg(kblang)
                 response['speaker'] = 'system_kbagent'
@@ -149,7 +157,7 @@ def dialog_logging(kblang):
     now = strftime("%y%m%d_%H%M%S")
     logid = str(now)+'_'+str(random.randint(1,1000))
     filename = './logs/'+logid
-    with open(filename,'w') as f:
+    with open(filename,'w', encoding='utf-8') as f:
         json.dump(kblang['dialog'],f,indent=4,ensure_ascii=False)
     print(filename, '이 저장되었습니다')
 
@@ -201,9 +209,5 @@ def terminal():
         kblang = olivia(kblang)
         response = kblang['dialog'][-1]['utterance']
         print("SYSTEM>>",response)
-
-
-terminal()
-
 
 

@@ -3,7 +3,6 @@ import error_handler
 import csv
 import kb_agent
 import pprint
-import ka
 
 class DM:
     def __init__(self):
@@ -104,9 +103,9 @@ class DM:
         else:
             dialogAct = kblang['dialogAct']
             dialogAct = dialogAct[:-1]
-            dialogAct.append('end')
+            dialogAct.append('feedback')
             kblang['dialogAct'] = dialogAct
-            kblang['dialogStatus'] = 'end'
+            kblang['dialogStatus'] = 'feedback'
 
 
 
@@ -140,8 +139,24 @@ class DM:
 
                 #triple 추가
 #                kblang = ka.ka_by_question(kblang)
+                if kblang['dialogAct'][-1] == 'Answer' and kblang['dialogAct'][-3] != 'feedback':
+                    incomplete_list = inform.kb_agent.KB_incomplete(kblang)
+                    if kblang['N_of_Q'] <= len(incomplete_list) and kblang['N_of_Q'] != 0:
+                        obtained_triple = []
+                        if 'obtained_triple' in kblang:
+                            obtained_triple = kblang['obtained_triple']
+                        obtained_triple.append(kblang['pTopic'] + '	' + kblang['property'] + '	' +kblang['cTopics'][-1])
+                        kblang['obtained_triple'] = obtained_triple
+
                 #2) dialogAct 가 agree 인 경우
-                if kblang['dialogAct'][-1] == 'Agree':
+                if kblang['dialogAct'][-1] == 'Agree' and kblang['dialogAct'][-3] != 'feedback':
+                #triple 추가
+                    obtained_triple = []
+                    if 'obtained_triple' in kblang:
+                        obtained_triple = kblang['obtained_triple']
+                    obtained_triple.append(kblang['pTopic'] + '	' + kblang['property'] + '	' + kblang['concept'])
+                    kblang['obtained_triple'] = obtained_triple
+
                     dialogAct = kblang['dialogAct']
                     dialogAct.append('Question')
                     kblang['dialogAct'] = dialogAct
@@ -151,11 +166,18 @@ class DM:
                     else:
                         kblang = DM.get_incomplete_list(self,kblang)
 
-                elif kblang['dialogAct'][-1] == 'Disagree':
+                elif kblang['dialogAct'][-1] == 'Disagree' and kblang['dialogAct'][-3] != 'feedback':
                     dialogAct = kblang['dialogAct']
-                    dialogAct.append('start')
+                    dialogAct.append('Question')
                     kblang['dialogAct'] = dialogAct
-
+                    if len(kblang['allTopics']) > 1:
+                        kblang['cTopic'] = kblang['allTopics'][-2]
+                        kblang['keyEntity'] = kblang['allTopics'][-2]
+                        kblang['pTopic'] = kblang['allTopics'][-2]
+                    else:
+                        kblang['cTopic'] = kblang['allTopics'][-1]
+                        kblang['keyEntity'] = kblang['allTopics'][-1]
+                        kblang['pTopic'] = kblang['allTopics'][-1]
                 else:
                     dialogAct = kblang['dialogAct']
                     dialogAct.append('Question')
