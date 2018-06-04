@@ -140,7 +140,7 @@ class DM:
                 #triple 추가
 #                kblang = ka.ka_by_question(kblang)
                 if kblang['dialogAct'][-1] == 'Answer' and kblang['dialogAct'][-3] != 'feedback':
-                    incomplete_list = inform.kb_agent.KB_incomplete(kblang)
+                    incomplete_list = kb_agent.KB_incomplete(kblang)
                     if kblang['N_of_Q'] <= len(incomplete_list) and kblang['N_of_Q'] != 0:
                         obtained_triple = []
                         if 'obtained_triple' in kblang:
